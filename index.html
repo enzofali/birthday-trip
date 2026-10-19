@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f2a22">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Happy birthday</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Karla:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--glass:#0f2a22;--glass2:#17392f;--paper:#e9e3d2;--ink:#2a1a1f;--wine:#7a1e34;--foil:#c2a25a;--muted:#6b5a55;
+ color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{height:100%;-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100%;background:radial-gradient(120% 80% at 50% 0%,var(--glass2),var(--glass));color:var(--paper);
+ font:400 17px/1.55 Karla,system-ui,sans-serif;display:grid;place-items:center;padding:24px 16px;overflow-x:hidden}
+section{width:min(100%,440px);text-align:center;animation:in .8s ease both}
+section[hidden]{display:none}
+@keyframes in{from{opacity:0}to{opacity:1}}
+h1,h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:700;margin:0;line-height:1.05}
+h1{font-size:clamp(2.4rem,11vw,3.4rem)}
+h2{font-size:1.8rem}
+p{margin:0}
+.soft{color:#b9c7bf}
+.btn{margin-top:26px;background:var(--foil);color:#2b2008;border:0;border-radius:999px;padding:14px 28px;font:600 1rem Karla,sans-serif;cursor:pointer;
+ -webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.btn:focus-visible{outline:3px solid var(--paper);outline-offset:3px}
+
+/* 1 birthday */
+.cake{position:relative;width:200px;height:170px;margin:30px auto 0;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.cake .tier{position:absolute;left:10px;right:10px;bottom:0;height:80px;background:var(--wine);border-radius:12px 12px 6px 6px;
+ box-shadow:inset 0 18px 0 var(--paper)}
+.cake .stick{position:absolute;left:50%;bottom:78px;width:8px;height:46px;margin-left:-4px;background:var(--foil);border-radius:3px}
+.flame{position:absolute;left:50%;bottom:122px;width:18px;height:30px;margin-left:-9px;background:radial-gradient(circle at 50% 70%,#fff3c4,#ffb830 60%,#e8651a);
+ border-radius:50% 50% 50% 50%/65% 65% 35% 35%;transform-origin:50% 100%;animation:flick .5s infinite alternate;transition:opacity .3s,transform .3s}
+@keyframes flick{from{transform:scale(1,1) rotate(-3deg)}to{transform:scale(.92,1.08) rotate(3deg)}}
+.cake.out .flame{opacity:0;transform:scale(.2);animation:none}
+#cv{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+#wished{margin-top:20px}
+
+/* 2 letter */
+.env{position:relative;width:270px;height:180px;margin:30px auto 0;background:var(--wine);border:0;border-radius:6px;cursor:pointer;display:block;
+ box-shadow:0 20px 40px rgba(0,0,0,.4);-webkit-tap-highlight-color:transparent}
+.env::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.07),transparent 50%),linear-gradient(225deg,rgba(0,0,0,.18),transparent 50%);border-radius:6px}
+.flap{position:absolute;left:0;right:0;top:0;height:95px;background:#8d2540;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .6s}
+.env.open .flap{transform:rotateX(180deg)}
+.env .seal{position:absolute;left:50%;top:78px;width:34px;height:34px;margin-left:-17px;border-radius:50%;background:var(--foil);box-shadow:0 2px 6px rgba(0,0,0,.4);transition:opacity .3s}
+.env.open .seal{opacity:0}
+.paper{background:var(--paper);color:var(--ink);text-align:left;border-radius:6px;padding:28px 24px;margin-top:6px;box-shadow:0 20px 40px rgba(0,0,0,.4);animation:rise .7s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.paper p{font:500 1.28rem/1.45 "Cormorant Garamond",Georgia,serif;margin-bottom:12px}
+.paper .sign{font-style:italic;color:var(--wine);margin:18px 0 0}
+
+/* 3 itinerary */
+.mapwrap{background:var(--glass2);border-radius:16px;padding:14px 12px 18px;margin-top:18px}
+svg.map{width:100%;height:auto;display:block;overflow:visible}
+.lbl{font:600 10.5px Karla,sans-serif;fill:#b9c7bf;transition:fill .3s}
+.lbl.on{fill:var(--foil)}
+.day{font:italic 500 13px "Cormorant Garamond",Georgia,serif;fill:rgba(233,227,210,.5)}
+.pin{transition:r .25s,fill .3s}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;margin:6px 0 0;touch-action:pan-y}
+input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:rgba(194,162,90,.35)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:38px;height:38px;border-radius:50%;margin-top:-16px;background:var(--foil);border:3px solid var(--paper);box-shadow:0 2px 8px rgba(0,0,0,.4)}
+input[type=range]::-moz-range-track{height:6px;border-radius:3px;background:rgba(194,162,90,.35)}
+input[type=range]::-moz-range-thumb{width:32px;height:32px;border-radius:50%;background:var(--foil);border:3px solid var(--paper)}
+input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2px}
+.card{min-height:7.2em;margin-top:10px;padding:0 6px}
+.card .when{display:block;font:600 .78rem Karla,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--foil);margin-bottom:2px}
+.card b{display:block;font:700 1.5rem/1.15 "Cormorant Garamond",Georgia,serif;margin-bottom:4px}
+.card a{color:var(--foil);display:inline-block;margin-top:8px;padding:6px 0}
+.facts{list-style:none;padding:0;margin:10px 0 0;text-align:left;font-size:.98rem}
+.facts li{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid rgba(233,227,210,.18)}
+.facts li span:last-child{text-align:right;font-weight:600}
+@media (prefers-reduced-motion:reduce){section,.paper{animation:none}.flame{animation:none}.flap{transition:none}}
+</style>
+</head>
+<body>
+
+<section id="s1">
+  <h1 id="hb">Happy birthday</h1>
+  <p class="soft" id="wishline" style="margin-top:10px">Make a wish. Tap the candle.</p>
+  <button class="cake" id="cake" aria-label="Blow out the candle">
+    <span class="flame"></span><span class="stick"></span><span class="tier"></span>
+  </button>
+  <div id="wished" hidden>
+    <p class="soft">Now, there’s a letter for you.</p>
+    <button class="btn" id="to2">Open the letter</button>
+  </div>
+</section>
+
+<section id="s2" hidden>
+  <button class="env" id="env" aria-label="Open the envelope"><span class="flap"></span><span class="seal"></span></button>
+  <p class="soft" id="envhint" style="margin-top:18px">Tap to open</p>
+  <div id="letter" hidden>
+    <div class="paper" id="paper"></div>
+    <button class="btn" id="to3">See our weekend</button>
+  </div>
+</section>
+
+<section id="s3" hidden>
+  <h2>Your birthday weekend</h2>
+  <p class="soft" style="margin-top:6px">Drag the gold circle to follow the plan.</p>
+  <div class="mapwrap">
+    <svg class="map" viewBox="0 0 320 160" role="img" aria-label="Weekend itinerary, Saturday 24 to Sunday 25">
+      <text class="day" x="60" y="16" text-anchor="middle">Saturday 24</text>
+      <text class="day" x="240" y="16" text-anchor="middle">Sunday 25</text>
+      <line x1="160" y1="6" x2="160" y2="150" stroke="rgba(233,227,210,.15)" stroke-dasharray="2 4"/>
+      <path id="route" d="M20 120 C70 30,120 150,170 90 S250 40,300 60" fill="none" stroke="rgba(194,162,90,.45)" stroke-width="3" stroke-dasharray="6 7" stroke-linecap="round"/>
+      <path id="trail" d="M20 120 C70 30,120 150,170 90 S250 40,300 60" fill="none" stroke="#c2a25a" stroke-width="3" stroke-linecap="round"/>
+      <g id="stops"></g>
+      <circle id="car" r="8" fill="#e9e3d2" stroke="#7a1e34" stroke-width="3.5"/>
+    </svg>
+    <input type="range" id="drive" min="0" max="100" value="0" step="0.5" aria-label="Move through the weekend">
+    <div class="card" id="card" aria-live="polite"></div>
+  </div>
+</section>
+
+<canvas id="cv" aria-hidden="true"></canvas>
+
+<script>
+/* ===== Edit this block ===== */
+const TRIP = {
+  her: "Her name",
+  from: "Your name",
+  letter: [
+    "Happy birthday, my love.",
+    "This year I wanted to give you something we can both remember: a weekend away, just the two of us, with horses, good wine and nowhere to be.",
+    "Thank you for making ordinary days feel like a celebration. I can’t wait to celebrate you properly."
+  ],
+  sign: "Yours,",
+  start: ["Saturday 24", "Ready?", "Pack your bag. We leave in the morning."],
+  stops: [ // position along the route (0 to 1), short map label, when, title, text, maps query
+    [0.12, "Lunch",     "Saturday 24 · Lunch",     "La Casita de Chocolate", "We start the weekend with something sweet.", "La Casita de Chocolate, Uruguay"],
+    [0.36, "Haras",     "Saturday 24 · Afternoon", "Haras Las Tordillas",     "Our home for the weekend. Settle in, breathe, enjoy the countryside.", "Haras Las Tordillas, Uruguay"],
+    [0.58, "Cabalgata", "Sunday 25 · Morning",     "Cabalgata",               "A horseback ride through the countryside, just the two of us.", "Haras Las Tordillas, Uruguay"],
+    [0.80, "Viña Edén", "Sunday 25 · Lunch",       "Viña Edén",               "Lunch among the vineyards, with a glass of their wine.", "Viña Edén, Pueblo Edén, Maldonado, Uruguay"]
+  ],
+  arrive: {
+    when: "Sunday 25 · Night",
+    title: "Your birthday dinner",
+    text: "And to close the weekend, a dinner to celebrate you.",
+    facts: [["When","Saturday 24 to Sunday 25 October"],["Staying","Haras Las Tordillas"],["Pack","Riding clothes, comfy shoes, a jacket and something nice for dinner"]]
+  }
+};
+/* =========================== */
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const go = id => { ["s1","s2","s3"].forEach(s => $(s).hidden = s !== id); window.scrollTo(0,0); };
+const mapLink = q => `<a href="https://maps.apple.com/?q=${encodeURIComponent(q)}">Open in Maps</a>`;
+
+$("hb").textContent = "Happy birthday, " + TRIP.her;
+$("paper").innerHTML = TRIP.letter.map(p => `<p>${esc(p)}</p>`).join("") + `<p class="sign">${esc(TRIP.sign)}<br>${esc(TRIP.from)}</p>`;
+
+/* 1 candle + confetti */
+const cv = $("cv"), cx = cv.getContext("2d");
+let parts = [], raf = 0;
+function confetti(){
+  if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+  const dpr = devicePixelRatio || 1; cv.width = innerWidth*dpr; cv.height = innerHeight*dpr; cx.setTransform(dpr,0,0,dpr,0,0);
+  const cols = ["#c2a25a","#7a1e34","#e9e3d2","#d6b6c0"];
+  parts = Array.from({length:90}, () => ({x:innerWidth/2,y:innerHeight*0.55,vx:(Math.random()-.5)*10,vy:-Math.random()*12-4,
+    s:4+Math.random()*5,c:cols[Math.random()*4|0],r:Math.random()*6,vr:(Math.random()-.5)*.4,life:0}));
+  cancelAnimationFrame(raf);
+  (function f(){ cx.clearRect(0,0,innerWidth,innerHeight);
+    parts.forEach(p => { p.vy += .35; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.life++;
+      cx.save(); cx.translate(p.x,p.y); cx.rotate(p.r); cx.fillStyle = p.c; cx.globalAlpha = Math.max(0,1-p.life/110); cx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2); cx.restore(); });
+    if (parts[0].life < 110) raf = requestAnimationFrame(f); else cx.clearRect(0,0,innerWidth,innerHeight); })();
+}
+$("cake").onclick = () => {
+  if ($("cake").classList.contains("out")) return;
+  $("cake").classList.add("out"); $("wishline").textContent = "I hope it comes true.";
+  if (navigator.vibrate) { try { navigator.vibrate(40); } catch(e){} }
+  confetti(); $("wished").hidden = false;
+};
+$("to2").onclick = () => go("s2");
+
+/* 2 envelope */
+$("env").onclick = () => {
+  $("env").classList.add("open"); $("envhint").hidden = true;
+  setTimeout(() => { $("env").hidden = true; $("letter").hidden = false; }, 650);
+};
+$("to3").onclick = () => { go("s3"); drive(); };
+
+/* 3 itinerary */
+const route = $("route"), trail = $("trail"), L = route.getTotalLength(), car = $("car"), NS = "http://www.w3.org/2000/svg";
+trail.style.strokeDasharray = L; trail.style.strokeDashoffset = L;
+const el = (tag, attrs) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); return n; };
+const pins = [], lbls = [];
+TRIP.stops.forEach((s, i) => {
+  const p = route.getPointAtLength(L*s[0]), below = i % 2 === 0;
+  const c = el("circle", {cx:p.x, cy:p.y, r:5, fill:"#17392f", stroke:"#e9e3d2", "stroke-width":2, class:"pin"});
+  const t = el("text", {x:p.x, y:below ? p.y+20 : p.y-12, "text-anchor":"middle", class:"lbl"});
+  t.textContent = s[1];
+  $("stops").append(c, t); pins.push(c); lbls.push(t);
+});
+const end = route.getPointAtLength(L);
+const flag = el("circle", {cx:end.x, cy:end.y, r:7, fill:"#17392f", stroke:"#c2a25a", "stroke-width":2.5, class:"pin"});
+const flagT = el("text", {x:end.x, y:end.y+22, "text-anchor":"middle", class:"lbl"}); flagT.textContent = "Dinner";
+$("stops").append(flag, flagT);
+
+function drive(){
+  const v = $("drive").value/100, p = route.getPointAtLength(L*v);
+  car.setAttribute("cx",p.x); car.setAttribute("cy",p.y);
+  trail.style.strokeDashoffset = L*(1-v);
+  TRIP.stops.forEach((s, i) => {
+    const on = v >= s[0];
+    pins[i].setAttribute("fill", on ? "#7a1e34" : "#17392f"); pins[i].setAttribute("r", on ? 6 : 5);
+    lbls[i].classList.toggle("on", on);
+  });
+  const card = $("card"), done = v >= 0.985;
+  flag.setAttribute("fill", done ? "#c2a25a" : "#17392f"); flagT.classList.toggle("on", done);
+  if (done){
+    const A = TRIP.arrive;
+    card.innerHTML = `<span class="when">${esc(A.when)}</span><b>${esc(A.title)}</b><p class="soft">${esc(A.text)}</p>
+      <ul class="facts">${A.facts.map(f => `<li><span class="soft">${esc(f[0])}</span><span>${esc(f[1])}</span></li>`).join("")}</ul>`;
+    if (!drive.cheered){ drive.cheered = true; confetti(); }
+    return;
+  }
+  const hit = TRIP.stops.filter(s => v >= s[0]).pop();
+  card.innerHTML = hit
+    ? `<span class="when">${esc(hit[2])}</span><b>${esc(hit[3])}</b><p class="soft">${esc(hit[4])}</p>${mapLink(hit[5])}`
+    : `<span class="when">${esc(TRIP.start[0])}</span><b>${esc(TRIP.start[1])}</b><p class="soft">${esc(TRIP.start[2])}</p>`;
+}
+$("drive").addEventListener("input", drive);
+</script>
+</body>
+</html>
