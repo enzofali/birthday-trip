@@ -98,10 +98,10 @@ input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2p
 
 <section id="s1">
   <h1 id="hb">Feliz cumpleaños</h1>
+  <p class="soft" id="wishline" style="margin-top:10px">Pedí un deseo.</p>
   <button class="cake" id="cake" aria-label="Soplar la vela">
     <span class="halo"></span><span class="flame"></span><span class="stick"></span><span class="tier"></span>
   </button>
-  <p class="soft" id="wishline" style="margin-top:14px" hidden>Ojalá se cumpla.</p>
   <div id="wished" hidden>
     <button class="btn" id="to2">Cartita</button>
   </div>
@@ -177,7 +177,7 @@ addEventListener("popstate", e => show((e.state && e.state.s) || "s1"));
 $("back").onclick = () => history.back();
 const mapLink = q => `<a href="${esc(/^https:\/\//.test(q) ? q : "https://maps.apple.com/?q=" + encodeURIComponent(q))}" target="_blank" rel="noopener">Abrir en Mapas</a>`;
 
-$("hb").textContent = "Feliz cumple, " + TRIP.her;
+$("hb").textContent = "Feliz cumple, " + TRIP.her + " ❤️";
 $("paper").innerHTML = TRIP.letter.map(p => `<p>${esc(p)}</p>`).join("") + `<p class="sign">${esc(TRIP.sign)}<br>${esc(TRIP.from)}</p>`;
 
 /* 1 candle + confetti */
@@ -197,7 +197,7 @@ function confetti(){
 }
 $("cake").onclick = () => {
   if ($("cake").classList.contains("out")) return;
-  $("cake").classList.add("out"); $("wishline").hidden = false;
+  $("cake").classList.add("out"); $("wishline").textContent = "Ojalá se cumpla.";
   if (navigator.vibrate) { try { navigator.vibrate(40); } catch(e){} }
   confetti(); $("wished").hidden = false;
 };
