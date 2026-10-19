@@ -290,7 +290,7 @@ const show = id => {
   $("back").hidden = id === "s1";
   if (id === "s3"){
     drive();
-    if (!show.intro){ show.intro = true; setTimeout(() => { if (+$("drive").value === 0 && !$("s3").hidden) jumpTo(TRIP.stops[0][0]*100, 1200); }, 1600); }
+    if (!show.intro){ show.intro = true; setTimeout(() => { if (+$("drive").value === 0 && !$("s3").hidden) jumpTo(TRIP.stops[0][0]*100, 800); }, 1000); }
   }
   window.scrollTo(0,0);
 };
