@@ -66,6 +66,8 @@ svg.map{width:100%;height:auto;display:block;overflow:visible}
 .lbl.on{fill:var(--foil)}
 .day{font:italic 500 13px "Cormorant Garamond",Georgia,serif;fill:rgba(233,227,210,.5)}
 .pin{transition:r .25s,fill .3s}
+.hit{fill:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none}
+.hit:focus-visible{stroke:var(--paper);stroke-width:1.5}
 input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;margin:6px 0 0;touch-action:pan-y}
 input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:rgba(194,162,90,.35)}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:38px;height:38px;border-radius:50%;margin-top:-16px;background:var(--foil);border:3px solid var(--paper);box-shadow:0 2px 8px rgba(0,0,0,.4)}
@@ -109,7 +111,7 @@ input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2p
 
 <section id="s3" hidden>
   <h2>Tu fin de semana de cumpleaños</h2>
-  <p class="soft" style="margin-top:6px">Deslizá el círculo dorado para seguir el plan.</p>
+  <p class="soft" style="margin-top:6px">Deslizá el círculo dorado o tocá cada parada.</p>
   <div class="mapwrap">
     <svg class="map" viewBox="0 0 320 160" role="img" aria-label="Itinerario del fin de semana, sábado 24 y domingo 25">
       <text class="day" x="60" y="16" text-anchor="middle">Sábado 24</text>
@@ -118,7 +120,7 @@ input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2p
       <path id="route" d="M20 120 C70 30,120 150,170 90 S250 40,300 60" fill="none" stroke="rgba(194,162,90,.45)" stroke-width="3" stroke-dasharray="6 7" stroke-linecap="round"/>
       <path id="trail" d="M20 120 C70 30,120 150,170 90 S250 40,300 60" fill="none" stroke="#c2a25a" stroke-width="3" stroke-linecap="round"/>
       <g id="stops"></g>
-      <circle id="car" r="8" fill="#e9e3d2" stroke="#7a1e34" stroke-width="3.5"/>
+      <circle id="car" pointer-events="none" r="8" fill="#e9e3d2" stroke="#7a1e34" stroke-width="3.5"/>
     </svg>
     <input type="range" id="drive" min="0" max="100" value="0" step="0.5" aria-label="Recorrer el fin de semana">
     <div class="card" id="card" aria-live="polite"></div>
@@ -217,6 +219,26 @@ const end = route.getPointAtLength(L);
 const flag = el("circle", {cx:end.x, cy:end.y, r:7, fill:"#17392f", stroke:"#c2a25a", "stroke-width":2.5, class:"pin"});
 const flagT = el("text", {x:end.x, y:end.y+22, "text-anchor":"middle", class:"lbl"}); flagT.textContent = "Cena";
 $("stops").append(flag, flagT);
+
+let anim = 0;
+function jumpTo(target){
+  const slider = $("drive"), from = +slider.value;
+  cancelAnimationFrame(anim);
+  if (matchMedia("(prefers-reduced-motion:reduce)").matches){ slider.value = target; drive(); return; }
+  const t0 = performance.now(), dur = 300 + Math.abs(target-from)*8;
+  (function step(now){
+    const k = Math.min(1,(now-t0)/dur), e = 1-Math.pow(1-k,3);
+    slider.value = from + (target-from)*e; drive();
+    if (k < 1) anim = requestAnimationFrame(step);
+  })(t0);
+}
+$("drive").addEventListener("pointerdown", () => cancelAnimationFrame(anim));
+[...TRIP.stops.map(s => [s[0]*100, s[3], route.getPointAtLength(L*s[0])]), [100, TRIP.arrive.title, end]].forEach(([target, name, p]) => {
+  const h = el("circle", {cx:p.x, cy:p.y, r:20, class:"hit", tabindex:0, role:"button", "aria-label":name});
+  h.addEventListener("click", () => jumpTo(target));
+  h.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); jumpTo(target); } });
+  $("stops").appendChild(h);
+});
 
 function drive(){
   const v = $("drive").value/100, p = route.getPointAtLength(L*v);
