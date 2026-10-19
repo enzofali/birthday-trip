@@ -90,7 +90,7 @@ p{margin:0}
 .env.open .flap{transform:rotateX(180deg);z-index:0}
 .env .seal{position:absolute;left:50%;top:86px;width:44px;height:44px;margin-left:-22px;z-index:5;display:grid;place-items:center;border-radius:50%;
  background:radial-gradient(circle at 35% 30%,#e6cc8a,#c2a25a 55%,#8f7333);box-shadow:0 2px 6px rgba(0,0,0,.45),inset 0 0 0 3px rgba(143,115,51,.55);
- font:italic 700 1.4rem/1 "Cormorant Garamond",Georgia,serif;color:#6e5523;transition:transform .35s ease,opacity .35s ease}
+ font:italic 700 1.05rem/1 "Cormorant Garamond",Georgia,serif;letter-spacing:.02em;color:#6e5523;transition:transform .35s ease,opacity .35s ease}
 .env.open .seal{transform:scale(1.3);opacity:0}
 .env .seal-halo{position:absolute;left:50%;top:76px;width:64px;height:64px;margin-left:-32px;z-index:4;border-radius:50%;pointer-events:none;
  background:radial-gradient(circle,rgba(255,200,90,.45),rgba(255,184,48,0) 70%);animation:pulse 1.6s ease-in-out infinite;transition:opacity .3s}
@@ -188,7 +188,7 @@ input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2p
       <path d="M2 182 L140 92 L278 182" fill="none" stroke="rgba(0,0,0,.22)"/>
     </svg>
     <span class="flap"></span>
-    <span class="seal-halo"></span><span class="seal" aria-hidden="true">P</span>
+    <span class="seal-halo"></span><span class="seal" aria-hidden="true"></span>
     <span class="to-name" id="toName"></span>
   </button>
   <div id="letter" hidden>
@@ -223,6 +223,7 @@ input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2p
 /* ===== Edit this block ===== */
 const TRIP = {
   her: "Pauli",
+  seal: "P.E",
   from: "Your name",
   letter: [
     "Feliz cumpleaños, mi amor.",
@@ -263,7 +264,7 @@ const mapLink = q => `<a href="${esc(/^https:\/\//.test(q) ? q : "https://maps.a
 $("herName").textContent = TRIP.her;
 $("paper").innerHTML = TRIP.letter.map(p => `<p>${esc(p)}</p>`).join("") + `<p class="sign">${esc(TRIP.sign)}<span class="script">${esc(TRIP.from)}</span></p>`;
 $("toName").textContent = "Para " + TRIP.her;
-document.querySelector(".seal").textContent = TRIP.her.charAt(0);
+document.querySelector(".seal").textContent = TRIP.seal;
 
 /* 1 candle + confetti */
 const cv = $("cv"), cx = cv.getContext("2d");
