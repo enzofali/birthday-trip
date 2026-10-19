@@ -12,11 +12,12 @@
 <style>
 :root{--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .28 0 0 0 0 .2 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
  --glass:#0f2a22;--glass2:#17392f;--paper:#e9e3d2;--ink:#2a1a1f;--wine:#7a1e34;--foil:#c2a25a;--muted:#6b5a55;
- color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-html{height:100%;-webkit-text-size-adjust:100%}
+ color-scheme:dark;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
 *,*::before,*::after{box-sizing:inherit}
-body{margin:0;min-height:100%;background:radial-gradient(120% 80% at 50% 0%,var(--glass2),var(--glass));color:var(--paper);
- font:400 17px/1.55 Karla,system-ui,sans-serif;display:grid;place-items:center;padding:24px 16px;overflow-x:hidden}
+body{margin:0;min-height:100vh;min-height:100dvh;background:radial-gradient(120% 80% at 50% 0%,var(--glass2),var(--glass)) fixed var(--glass);color:var(--paper);
+ font:400 17px/1.55 Karla,system-ui,sans-serif;display:grid;place-items:center;overflow-x:hidden;
+ padding:calc(24px + env(safe-area-inset-top,0px)) calc(16px + env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) calc(16px + env(safe-area-inset-left,0px))}
 section{width:min(100%,440px);text-align:center;animation:in .8s ease both}
 section[hidden]{display:none}
 @keyframes in{from{opacity:0}to{opacity:1}}
@@ -78,9 +79,10 @@ p{margin:0}
 #wished[hidden]{display:block;visibility:hidden}
 
 /* 2 letter */
-.env{position:relative;display:block;width:280px;height:186px;margin:90px auto 0;padding:0;border:0;border-radius:8px;background:#4a1020;cursor:pointer;
+.env{position:relative;display:block;width:280px;height:186px;margin:0 auto;padding:0;border:0;border-radius:8px;background:#4a1020;cursor:pointer;
  perspective:900px;box-shadow:0 22px 44px rgba(0,0,0,.45);-webkit-tap-highlight-color:transparent;transition:opacity .5s ease,transform .5s ease}
 .env.gone{opacity:0;transform:translateY(30px) scale(.96)}
+.env[hidden]{display:none}
 .env .peek{position:absolute;left:16px;right:16px;top:12px;height:150px;z-index:1;border-radius:4px;background:#efe9d9;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
 .env .peek::before{content:"";position:absolute;left:20px;right:34px;top:24px;height:2px;background:rgba(42,26,31,.16);box-shadow:0 12px 0 rgba(42,26,31,.16),0 24px 0 rgba(42,26,31,.1)}
 .env.lift .peek{transform:translateY(-92px)}
@@ -221,8 +223,7 @@ input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2p
 </section>
 
 <section id="s3" hidden>
-  <h2>Tu fin de semana de cumpleaños</h2>
-  <p class="soft" style="margin-top:6px">Deslizá el círculo dorado o tocá cada parada.</p>
+  <h2>Tu regalo</h2>
   <div class="mapwrap">
     <div class="sky" id="sky">
     <svg class="map" viewBox="0 0 320 160" role="img" aria-label="Itinerario del fin de semana, sábado 24 y domingo 25">
@@ -265,16 +266,16 @@ const TRIP = {
   sign: "Te amo,",
   start: ["Sábado 24", "¿Lista?", "Prepará el bolso. Salimos a la mañana."],
   stops: [ // position along the route (0 to 1), short map label, when, title, text, maps query
-    [0.12, "Almuerzo",  "Sábado 24 · Almuerzo",   "La Casita de Chocolate", "Empezamos el fin de semana con algo dulce.", "La Casita de Chocolate, Uruguay"],
-    [0.36, "Haras",     "Sábado 24 · Tarde",      "Haras Las Tordillas",     "Nuestra casa por el fin de semana. Instalarnos, respirar y disfrutar del campo.", "Haras Las Tordillas, Uruguay"],
-    [0.58, "Cabalgata", "Domingo 25 · Mañana",    "Cabalgata",               "Un paseo a caballo por el campo, solo nosotros dos.", "Haras Las Tordillas, Uruguay"],
-    [0.80, "Viña Edén", "Domingo 25 · Almuerzo",  "Viña Edén",               "Almuerzo entre viñedos, con una copa de su vino.", "https://www.google.com/maps/place/Vi%C3%B1a+Eden/@-34.6851837,-55.2008744,11.25z/data=!4m9!3m8!1s0x957530aad0b4e617:0x23999ac0291f529e!5m2!4m1!1i2!8m2!3d-34.661876!4d-55.040554!16s%2Fg%2F11c5b0_sht"]
+    [0.12, "Almuerzo",  "Sábado 24 · Almuerzo",   "La Casita de Chocolate", "Empezamos el fin de semana almorzando juntos.", "La Casita de Chocolate, Uruguay"],
+    [0.36, "Haras",     "Sábado 24 · Tarde",      "Haras Las Tordillas",     "Nuestra casa por el fin de semana.", "Haras Las Tordillas, Uruguay"],
+    [0.58, "Cabalgata", "Domingo 25 · Mañana",    "Cabalgata",               "Un paseo a caballo por el campo.", "Haras Las Tordillas, Uruguay"],
+    [0.80, "Viña Edén", "Domingo 25 · Picnic",    "Viña Edén",               "Picnic entre viñedos, con una copa de su vino.", "https://www.google.com/maps/place/Vi%C3%B1a+Eden/@-34.6851837,-55.2008744,11.25z/data=!4m9!3m8!1s0x957530aad0b4e617:0x23999ac0291f529e!5m2!4m1!1i2!8m2!3d-34.661876!4d-55.040554!16s%2Fg%2F11c5b0_sht"]
   ],
   arrive: {
     when: "Domingo 25 · Noche",
     title: "Tu cena de cumpleaños",
-    text: "Y para cerrar el fin de semana, una cena para celebrarte.",
-    closing: "Te amo ❤️",
+    text: "El final perfecto: celebrarte.",
+    closing: "Por muchos más ❤️",
     facts: [["Cuándo","Sábado 24 y domingo 25 de octubre"],["Dónde dormimos","Haras Las Tordillas"],["Qué llevar","Ropa para montar, calzado cómodo, un abrigo y algo lindo para la cena"]]
   }
 };
@@ -443,9 +444,7 @@ function drive(){
   curIdx = idx;
   card.innerHTML = cardHTML(idx);
   card.classList.remove("cin-f","cin-b"); void card.offsetWidth; card.classList.add("cin-" + dir);
-  [...$("dots").children].forEach((d, i) => { d.classList.toggle("on", i === idx); d.classList.toggle("past", i < idx); });
-  if (done && !drive.cheered){ drive.cheered = true; confetti(); }
-}
+  [...$("dots").children].forEach((d, i) => { d.classList.toggle("on", i === idx); d.classList.toggle("past", i < idx); });}
 $("drive").addEventListener("input", drive);
 </script>
 </body>
