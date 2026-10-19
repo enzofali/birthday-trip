@@ -310,7 +310,7 @@ const go = id => { history.pushState({s:id}, "", "#" + id); show(id); };
 history.replaceState({s:"s1"}, "", location.pathname);
 addEventListener("popstate", e => show((e.state && e.state.s) || "s1"));
 $("back").onclick = () => history.back();
-const mapLink = q => `<a href="${esc(/^https:\/\//.test(q) ? q : "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q))}" target="_blank" rel="noopener">Abrir en Mapas</a>`;
+const mapLink = q => `<a href="${esc(/^https:\/\//.test(q) ? q : "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q))}" target="_blank" rel="noopener">Abrir en Maps</a>`;
 
 $("herName").textContent = TRIP.her;
 $("paper").innerHTML = TRIP.letter.map(p => `<p>${esc(p)}</p>`).join("") + `<p class="sign">${esc(TRIP.sign)}<span class="script">${esc(TRIP.from)}</span></p>`;
