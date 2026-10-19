@@ -27,6 +27,11 @@ p{margin:0}
 .btn{margin-top:26px;background:var(--foil);color:#2b2008;border:0;border-radius:999px;padding:14px 28px;font:600 1rem Karla,sans-serif;cursor:pointer;
  -webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .btn:focus-visible{outline:3px solid var(--paper);outline-offset:3px}
+.back{position:fixed;z-index:2;top:calc(env(safe-area-inset-top,0px) + 12px);left:12px;min-height:44px;padding:10px 16px 10px 12px;border:1px solid rgba(233,227,210,.25);
+ border-radius:999px;background:rgba(15,42,34,.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--paper);font:600 .95rem Karla,sans-serif;
+ cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.back[hidden]{display:none}
+.back:focus-visible{outline:3px solid var(--paper);outline-offset:2px}
 
 /* 1 birthday */
 .cake{position:relative;width:200px;height:170px;margin:30px auto 0;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -77,6 +82,8 @@ input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2p
 </style>
 </head>
 <body>
+
+<button class="back" id="back" hidden>‹ Back</button>
 
 <section id="s1">
   <h1 id="hb">Happy birthday</h1>
@@ -148,7 +155,16 @@ const TRIP = {
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const go = id => { ["s1","s2","s3"].forEach(s => $(s).hidden = s !== id); window.scrollTo(0,0); };
+const show = id => {
+  ["s1","s2","s3"].forEach(s => $(s).hidden = s !== id);
+  $("back").hidden = id === "s1";
+  if (id === "s3") drive();
+  window.scrollTo(0,0);
+};
+const go = id => { history.pushState({s:id}, "", "#" + id); show(id); };
+history.replaceState({s:"s1"}, "", location.pathname);
+addEventListener("popstate", e => show((e.state && e.state.s) || "s1"));
+$("back").onclick = () => history.back();
 const mapLink = q => `<a href="https://maps.apple.com/?q=${encodeURIComponent(q)}">Open in Maps</a>`;
 
 $("hb").textContent = "Happy birthday, " + TRIP.her;
@@ -182,7 +198,7 @@ $("env").onclick = () => {
   $("env").classList.add("open"); $("envhint").hidden = true;
   setTimeout(() => { $("env").hidden = true; $("letter").hidden = false; }, 650);
 };
-$("to3").onclick = () => { go("s3"); drive(); };
+$("to3").onclick = () => go("s3");
 
 /* 3 itinerary */
 const route = $("route"), trail = $("trail"), L = route.getTotalLength(), car = $("car"), NS = "http://www.w3.org/2000/svg";
