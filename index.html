@@ -103,7 +103,7 @@ input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2p
     <span class="halo"></span><span class="flame"></span><span class="stick"></span><span class="tier"></span>
   </button>
   <div id="wished" hidden>
-    <button class="btn" id="to2">Cartita</button>
+    <button class="btn" id="to2">Una cartita para vos</button>
   </div>
 </section>
 
@@ -197,7 +197,7 @@ function confetti(){
 }
 $("cake").onclick = () => {
   if ($("cake").classList.contains("out")) return;
-  $("cake").classList.add("out"); $("wishline").textContent = "Ojalá se cumpla.";
+  $("cake").classList.add("out"); $("wishline").textContent = "Ojalá se cumpla. 🤗";
   if (navigator.vibrate) { try { navigator.vibrate(40); } catch(e){} }
   confetti(); $("wished").hidden = false;
 };
