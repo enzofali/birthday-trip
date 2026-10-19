@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0f2a22">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Happy birthday</title>
+<title>Feliz cumpleaños</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Karla:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -27,11 +27,12 @@ p{margin:0}
 .btn{margin-top:26px;background:var(--foil);color:#2b2008;border:0;border-radius:999px;padding:14px 28px;font:600 1rem Karla,sans-serif;cursor:pointer;
  -webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .btn:focus-visible{outline:3px solid var(--paper);outline-offset:3px}
-.back{position:fixed;z-index:2;top:calc(env(safe-area-inset-top,0px) + 12px);left:12px;min-height:44px;padding:10px 16px 10px 12px;border:1px solid rgba(233,227,210,.25);
- border-radius:999px;background:rgba(15,42,34,.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--paper);font:600 .95rem Karla,sans-serif;
- cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.back{position:fixed;z-index:2;top:calc(env(safe-area-inset-top,0px) + 8px);left:6px;width:44px;height:44px;display:grid;place-items:center;padding:0;border:0;
+ background:none;color:rgba(233,227,210,.6);cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:color .2s}
+.back:hover,.back:active{color:var(--paper)}
+.back svg{width:22px;height:22px}
 .back[hidden]{display:none}
-.back:focus-visible{outline:3px solid var(--paper);outline-offset:2px}
+.back:focus-visible{outline:2px solid var(--paper);outline-offset:-4px;border-radius:50%}
 
 /* 1 birthday */
 .cake{position:relative;width:200px;height:170px;margin:30px auto 0;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -83,43 +84,43 @@ input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2p
 </head>
 <body>
 
-<button class="back" id="back" hidden>‹ Back</button>
+<button class="back" id="back" hidden aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
 
 <section id="s1">
-  <h1 id="hb">Happy birthday</h1>
-  <p class="soft" id="wishline" style="margin-top:10px">Make a wish. Tap the candle.</p>
-  <button class="cake" id="cake" aria-label="Blow out the candle">
+  <h1 id="hb">Feliz cumpleaños</h1>
+  <p class="soft" id="wishline" style="margin-top:10px">Pedí un deseo. Tocá la vela.</p>
+  <button class="cake" id="cake" aria-label="Soplar la vela">
     <span class="flame"></span><span class="stick"></span><span class="tier"></span>
   </button>
   <div id="wished" hidden>
-    <p class="soft">Now, there’s a letter for you.</p>
-    <button class="btn" id="to2">Open the letter</button>
+    <p class="soft">Ahora, hay una carta para vos.</p>
+    <button class="btn" id="to2">Abrir la carta</button>
   </div>
 </section>
 
 <section id="s2" hidden>
-  <button class="env" id="env" aria-label="Open the envelope"><span class="flap"></span><span class="seal"></span></button>
-  <p class="soft" id="envhint" style="margin-top:18px">Tap to open</p>
+  <button class="env" id="env" aria-label="Abrir el sobre"><span class="flap"></span><span class="seal"></span></button>
+  <p class="soft" id="envhint" style="margin-top:18px">Tocá para abrir</p>
   <div id="letter" hidden>
     <div class="paper" id="paper"></div>
-    <button class="btn" id="to3">See our weekend</button>
+    <button class="btn" id="to3">Ver nuestro fin de semana</button>
   </div>
 </section>
 
 <section id="s3" hidden>
-  <h2>Your birthday weekend</h2>
-  <p class="soft" style="margin-top:6px">Drag the gold circle to follow the plan.</p>
+  <h2>Tu fin de semana de cumpleaños</h2>
+  <p class="soft" style="margin-top:6px">Deslizá el círculo dorado para seguir el plan.</p>
   <div class="mapwrap">
-    <svg class="map" viewBox="0 0 320 160" role="img" aria-label="Weekend itinerary, Saturday 24 to Sunday 25">
-      <text class="day" x="60" y="16" text-anchor="middle">Saturday 24</text>
-      <text class="day" x="240" y="16" text-anchor="middle">Sunday 25</text>
+    <svg class="map" viewBox="0 0 320 160" role="img" aria-label="Itinerario del fin de semana, sábado 24 y domingo 25">
+      <text class="day" x="60" y="16" text-anchor="middle">Sábado 24</text>
+      <text class="day" x="240" y="16" text-anchor="middle">Domingo 25</text>
       <line x1="160" y1="6" x2="160" y2="150" stroke="rgba(233,227,210,.15)" stroke-dasharray="2 4"/>
       <path id="route" d="M20 120 C70 30,120 150,170 90 S250 40,300 60" fill="none" stroke="rgba(194,162,90,.45)" stroke-width="3" stroke-dasharray="6 7" stroke-linecap="round"/>
       <path id="trail" d="M20 120 C70 30,120 150,170 90 S250 40,300 60" fill="none" stroke="#c2a25a" stroke-width="3" stroke-linecap="round"/>
       <g id="stops"></g>
       <circle id="car" r="8" fill="#e9e3d2" stroke="#7a1e34" stroke-width="3.5"/>
     </svg>
-    <input type="range" id="drive" min="0" max="100" value="0" step="0.5" aria-label="Move through the weekend">
+    <input type="range" id="drive" min="0" max="100" value="0" step="0.5" aria-label="Recorrer el fin de semana">
     <div class="card" id="card" aria-live="polite"></div>
   </div>
 </section>
@@ -132,23 +133,23 @@ const TRIP = {
   her: "Her name",
   from: "Your name",
   letter: [
-    "Happy birthday, my love.",
-    "This year I wanted to give you something we can both remember: a weekend away, just the two of us, with horses, good wine and nowhere to be.",
-    "Thank you for making ordinary days feel like a celebration. I can’t wait to celebrate you properly."
+    "Feliz cumpleaños, mi amor.",
+    "Este año quise regalarte algo que podamos recordar los dos: un fin de semana lejos, solo nosotros, con caballos, buen vino y ningún apuro.",
+    "Gracias por hacer que los días comunes se sientan como una celebración. No veo la hora de celebrarte como te merecés."
   ],
-  sign: "Yours,",
-  start: ["Saturday 24", "Ready?", "Pack your bag. We leave in the morning."],
+  sign: "Tuyo,",
+  start: ["Sábado 24", "¿Lista?", "Prepará el bolso. Salimos a la mañana."],
   stops: [ // position along the route (0 to 1), short map label, when, title, text, maps query
-    [0.12, "Lunch",     "Saturday 24 · Lunch",     "La Casita de Chocolate", "We start the weekend with something sweet.", "La Casita de Chocolate, Uruguay"],
-    [0.36, "Haras",     "Saturday 24 · Afternoon", "Haras Las Tordillas",     "Our home for the weekend. Settle in, breathe, enjoy the countryside.", "Haras Las Tordillas, Uruguay"],
-    [0.58, "Cabalgata", "Sunday 25 · Morning",     "Cabalgata",               "A horseback ride through the countryside, just the two of us.", "Haras Las Tordillas, Uruguay"],
-    [0.80, "Viña Edén", "Sunday 25 · Lunch",       "Viña Edén",               "Lunch among the vineyards, with a glass of their wine.", "Viña Edén, Pueblo Edén, Maldonado, Uruguay"]
+    [0.12, "Almuerzo",  "Sábado 24 · Almuerzo",   "La Casita de Chocolate", "Empezamos el fin de semana con algo dulce.", "La Casita de Chocolate, Uruguay"],
+    [0.36, "Haras",     "Sábado 24 · Tarde",      "Haras Las Tordillas",     "Nuestra casa por el fin de semana. Instalarnos, respirar y disfrutar del campo.", "Haras Las Tordillas, Uruguay"],
+    [0.58, "Cabalgata", "Domingo 25 · Mañana",    "Cabalgata",               "Un paseo a caballo por el campo, solo nosotros dos.", "Haras Las Tordillas, Uruguay"],
+    [0.80, "Viña Edén", "Domingo 25 · Almuerzo",  "Viña Edén",               "Almuerzo entre viñedos, con una copa de su vino.", "Viña Edén, Pueblo Edén, Maldonado, Uruguay"]
   ],
   arrive: {
-    when: "Sunday 25 · Night",
-    title: "Your birthday dinner",
-    text: "And to close the weekend, a dinner to celebrate you.",
-    facts: [["When","Saturday 24 to Sunday 25 October"],["Staying","Haras Las Tordillas"],["Pack","Riding clothes, comfy shoes, a jacket and something nice for dinner"]]
+    when: "Domingo 25 · Noche",
+    title: "Tu cena de cumpleaños",
+    text: "Y para cerrar el fin de semana, una cena para celebrarte.",
+    facts: [["Cuándo","Sábado 24 y domingo 25 de octubre"],["Dónde dormimos","Haras Las Tordillas"],["Qué llevar","Ropa para montar, calzado cómodo, un abrigo y algo lindo para la cena"]]
   }
 };
 /* =========================== */
@@ -165,9 +166,9 @@ const go = id => { history.pushState({s:id}, "", "#" + id); show(id); };
 history.replaceState({s:"s1"}, "", location.pathname);
 addEventListener("popstate", e => show((e.state && e.state.s) || "s1"));
 $("back").onclick = () => history.back();
-const mapLink = q => `<a href="https://maps.apple.com/?q=${encodeURIComponent(q)}">Open in Maps</a>`;
+const mapLink = q => `<a href="https://maps.apple.com/?q=${encodeURIComponent(q)}">Abrir en Mapas</a>`;
 
-$("hb").textContent = "Happy birthday, " + TRIP.her;
+$("hb").textContent = "Feliz cumpleaños, " + TRIP.her;
 $("paper").innerHTML = TRIP.letter.map(p => `<p>${esc(p)}</p>`).join("") + `<p class="sign">${esc(TRIP.sign)}<br>${esc(TRIP.from)}</p>`;
 
 /* 1 candle + confetti */
@@ -187,7 +188,7 @@ function confetti(){
 }
 $("cake").onclick = () => {
   if ($("cake").classList.contains("out")) return;
-  $("cake").classList.add("out"); $("wishline").textContent = "I hope it comes true.";
+  $("cake").classList.add("out"); $("wishline").textContent = "Ojalá se cumpla.";
   if (navigator.vibrate) { try { navigator.vibrate(40); } catch(e){} }
   confetti(); $("wished").hidden = false;
 };
@@ -214,7 +215,7 @@ TRIP.stops.forEach((s, i) => {
 });
 const end = route.getPointAtLength(L);
 const flag = el("circle", {cx:end.x, cy:end.y, r:7, fill:"#17392f", stroke:"#c2a25a", "stroke-width":2.5, class:"pin"});
-const flagT = el("text", {x:end.x, y:end.y+22, "text-anchor":"middle", class:"lbl"}); flagT.textContent = "Dinner";
+const flagT = el("text", {x:end.x, y:end.y+22, "text-anchor":"middle", class:"lbl"}); flagT.textContent = "Cena";
 $("stops").append(flag, flagT);
 
 function drive(){
