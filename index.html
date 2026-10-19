@@ -254,6 +254,7 @@ input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2p
 
 <script>
 /* ===== Edit this block ===== */
+const HARAS_MAP = "https://www.google.com/maps/place/Haras+Las+Tordillas/@-34.5194811,-55.1653908,15.21z/data=!4m9!3m8!1s0x950ab543d397297b:0x5d70e5ef6b094306!5m2!4m1!1i2!8m2!3d-34.5196284!4d-55.1546748!16s%2Fg%2F11d_wyr6n2?entry=ttu";
 const TRIP = {
   her: "Pauli",
   seal: "P.E",
@@ -267,9 +268,9 @@ const TRIP = {
   start: ["Sábado 24", "¿Lista?", "Prepará el bolso. Salimos a la mañana."],
   stops: [ // position along the route (0 to 1), short map label, when, title, text, maps query
     [0.12, "Almuerzo",  "Sábado 24 · Almuerzo",   "La Casita de Chocolate", "Empezamos el fin de semana almorzando juntos.", "La Casita de Chocolate, Pueblo Edén, Maldonado, Uruguay"],
-    [0.36, "Haras",     "Sábado 24 · Tarde",      "Haras Las Tordillas",     "Nuestra casa por el fin de semana.", "Haras Las Tordillas, Pueblo Edén, Maldonado, Uruguay"],
-    [0.58, "Cabalgata", "Domingo 25 · Mañana",    "Cabalgata",               "Un paseo a caballo por el campo.", "Haras Las Tordillas, Pueblo Edén, Maldonado, Uruguay"],
-    [0.80, "Viña Edén", "Domingo 25 · Picnic",    "Viña Edén",               "Picnic entre viñedos, con una copa de su vino.", "https://www.google.com/maps/place/Vi%C3%B1a+Eden/@-34.6851837,-55.2008744,11.25z/data=!4m9!3m8!1s0x957530aad0b4e617:0x23999ac0291f529e!5m2!4m1!1i2!8m2!3d-34.661876!4d-55.040554!16s%2Fg%2F11c5b0_sht"]
+    [0.36, "Haras",     "Sábado 24 · Tarde",      "Haras Las Tordillas",     "Nuestra casa por el fin de semana.", HARAS_MAP],
+    [0.58, "Cabalgata", "Domingo 25 · Mañana",    "Cabalgata",               "Un paseo a caballo por el campo.", HARAS_MAP],
+    [0.80, "Viña Edén", "Domingo 25 · Picnic",    "Viña Edén",               "Picnic entre viñedos, con una copa de su vino.", "https://www.google.com/maps/place/Vi%C3%B1a+Eden/@-34.6724674,-55.059014,11.96z/data=!4m9!3m8!1s0x957530aad0b4e617:0x23999ac0291f529e!5m2!4m1!1i2!8m2!3d-34.661876!4d-55.040554!16s%2Fg%2F11c5b0_sht?entry=ttu"]
   ],
   arrive: {
     when: "Domingo 25 · Noche",
