@@ -223,7 +223,7 @@ input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2p
 </section>
 
 <section id="s3" hidden>
-  <h2>Tu regalo</h2>
+  <h2>Tu regalo de cumple</h2>
   <div class="mapwrap">
     <div class="sky" id="sky">
     <svg class="map" viewBox="0 0 320 160" role="img" aria-label="Itinerario del fin de semana, sábado 24 y domingo 25">
@@ -265,7 +265,7 @@ const TRIP = {
     "Gracias por hacer que los días comunes se sientan como una celebración. No veo la hora de celebrarte como te merecés."
   ],
   sign: "Te amo,",
-  start: ["Sábado 24", "¿Lista?", "Prepará el bolso. Salimos a la mañana."],
+  start: ["Sábado 24", "Escapadita", "Salimos por la mañana."],
   stops: [ // position along the route (0 to 1), short map label, when, title, text, maps query
     [0.12, "Almuerzo",  "Sábado 24 · Almuerzo",   "La Casita de Chocolate", "Empezamos el fin de semana almorzando juntos.", "La Casita de Chocolate, Pueblo Edén, Maldonado, Uruguay"],
     [0.36, "Haras",     "Sábado 24 · Tarde",      "Haras Las Tordillas",     "Nuestra casa por el fin de semana.", HARAS_MAP],
@@ -274,10 +274,10 @@ const TRIP = {
   ],
   arrive: {
     when: "Domingo 25 · Noche",
-    title: "Tu cena de cumpleaños",
-    text: "El final perfecto: celebrarte.",
+    title: "Tu cena de cumple",
+    text: "Velas, vino y vos.",
     closing: "Por muchos más ❤️",
-    facts: [["Cuándo","Sábado 24 y domingo 25 de octubre"],["Dónde dormimos","Haras Las Tordillas"],["Qué llevar","Ropa para montar, calzado cómodo, un abrigo y algo lindo para la cena"]]
+    facts: [["Cuándo","Sábado 24 y domingo 25 de octubre"],["Dónde","Haras Las Tordillas"],["No te olvides","Ropa para montar, calzado cómodo, un abrigo y algo lindo para la cena"]]
   }
 };
 /* =========================== */
@@ -289,7 +289,7 @@ const show = id => {
   $("back").hidden = id === "s1";
   if (id === "s3"){
     drive();
-    if (!show.intro){ show.intro = true; setTimeout(() => { if (+$("drive").value === 0) jumpTo(TRIP.stops[0][0]*100); }, 700); }
+    if (!show.intro){ show.intro = true; setTimeout(() => { if (+$("drive").value === 0 && !$("s3").hidden) jumpTo(TRIP.stops[0][0]*100, 1600); }, 3200); }
   }
   window.scrollTo(0,0);
 };
@@ -373,13 +373,13 @@ const flagT = el("text", {x:end.x, y:end.y+22, "text-anchor":"middle", class:"lb
 $("stops").append(flag, flagT);
 
 let anim = 0;
-function jumpTo(target){
+function jumpTo(target, slow){
   const slider = $("drive"), from = +slider.value;
   cancelAnimationFrame(anim);
   if (matchMedia("(prefers-reduced-motion:reduce)").matches){ slider.value = target; drive(); return; }
-  const t0 = performance.now(), dur = 300 + Math.abs(target-from)*8;
+  const t0 = performance.now(), dur = slow || 300 + Math.abs(target-from)*8;
   (function step(now){
-    const k = Math.min(1,(now-t0)/dur), e = 1-Math.pow(1-k,3);
+    const k = Math.min(1,(now-t0)/dur), e = slow ? (k<.5 ? 2*k*k : 1-Math.pow(-2*k+2,2)/2) : 1-Math.pow(1-k,3);
     slider.value = from + (target-from)*e; drive();
     if (k < 1) anim = requestAnimationFrame(step);
   })(t0);
