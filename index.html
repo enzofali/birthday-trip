@@ -43,6 +43,14 @@ p{margin:0}
  border-radius:50% 50% 50% 50%/65% 65% 35% 35%;transform-origin:50% 100%;animation:flick .5s infinite alternate;transition:opacity .3s,transform .3s}
 @keyframes flick{from{transform:scale(1,1) rotate(-3deg)}to{transform:scale(.92,1.08) rotate(3deg)}}
 .cake.out .flame{opacity:0;transform:scale(.2);animation:none}
+.halo{position:absolute;left:50%;bottom:106px;width:64px;height:64px;margin-left:-32px;border-radius:50%;pointer-events:none;
+ background:radial-gradient(circle,rgba(255,200,90,.55),rgba(255,184,48,0) 70%);animation:pulse 1.6s ease-in-out infinite;transition:opacity .3s}
+.halo::after{content:"";position:absolute;inset:-6px;border:2px solid rgba(194,162,90,.7);border-radius:50%;animation:ring 1.6s ease-out infinite}
+@keyframes pulse{0%,100%{transform:scale(.85);opacity:.7}50%{transform:scale(1.15);opacity:1}}
+@keyframes ring{from{transform:scale(.6);opacity:.9}to{transform:scale(1.5);opacity:0}}
+.cake:active .tier{transform:scale(.97)}
+.cake.out .halo{opacity:0;animation:none}
+.cake.out .halo::after{animation:none}
 #cv{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
 #wished{margin-top:20px}
 
@@ -81,7 +89,7 @@ input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2p
 .facts{list-style:none;padding:0;margin:10px 0 0;text-align:left;font-size:.98rem}
 .facts li{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid rgba(233,227,210,.18)}
 .facts li span:last-child{text-align:right;font-weight:600}
-@media (prefers-reduced-motion:reduce){section,.paper{animation:none}.flame{animation:none}.flap{transition:none}}
+@media (prefers-reduced-motion:reduce){section,.paper{animation:none}.flame,.halo,.halo::after{animation:none}.flap{transition:none}}
 </style>
 </head>
 <body>
@@ -90,13 +98,12 @@ input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2p
 
 <section id="s1">
   <h1 id="hb">Feliz cumpleaños</h1>
-  <p class="soft" id="wishline" style="margin-top:10px">Pedí un deseo. Tocá la vela.</p>
   <button class="cake" id="cake" aria-label="Soplar la vela">
-    <span class="flame"></span><span class="stick"></span><span class="tier"></span>
+    <span class="halo"></span><span class="flame"></span><span class="stick"></span><span class="tier"></span>
   </button>
+  <p class="soft" id="wishline" style="margin-top:14px" hidden>Ojalá se cumpla.</p>
   <div id="wished" hidden>
-    <p class="soft">Ahora, hay una carta para vos.</p>
-    <button class="btn" id="to2">Abrir la carta</button>
+    <button class="btn" id="to2">Cartita</button>
   </div>
 </section>
 
@@ -132,7 +139,7 @@ input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2p
 <script>
 /* ===== Edit this block ===== */
 const TRIP = {
-  her: "Her name",
+  her: "Pauli",
   from: "Your name",
   letter: [
     "Feliz cumpleaños, mi amor.",
@@ -145,7 +152,7 @@ const TRIP = {
     [0.12, "Almuerzo",  "Sábado 24 · Almuerzo",   "La Casita de Chocolate", "Empezamos el fin de semana con algo dulce.", "La Casita de Chocolate, Uruguay"],
     [0.36, "Haras",     "Sábado 24 · Tarde",      "Haras Las Tordillas",     "Nuestra casa por el fin de semana. Instalarnos, respirar y disfrutar del campo.", "Haras Las Tordillas, Uruguay"],
     [0.58, "Cabalgata", "Domingo 25 · Mañana",    "Cabalgata",               "Un paseo a caballo por el campo, solo nosotros dos.", "Haras Las Tordillas, Uruguay"],
-    [0.80, "Viña Edén", "Domingo 25 · Almuerzo",  "Viña Edén",               "Almuerzo entre viñedos, con una copa de su vino.", "Viña Edén, Pueblo Edén, Maldonado, Uruguay"]
+    [0.80, "Viña Edén", "Domingo 25 · Almuerzo",  "Viña Edén",               "Almuerzo entre viñedos, con una copa de su vino.", "https://www.google.com/maps/place/Vi%C3%B1a+Eden/@-34.6851837,-55.2008744,11.25z/data=!4m9!3m8!1s0x957530aad0b4e617:0x23999ac0291f529e!5m2!4m1!1i2!8m2!3d-34.661876!4d-55.040554!16s%2Fg%2F11c5b0_sht"]
   ],
   arrive: {
     when: "Domingo 25 · Noche",
@@ -168,9 +175,9 @@ const go = id => { history.pushState({s:id}, "", "#" + id); show(id); };
 history.replaceState({s:"s1"}, "", location.pathname);
 addEventListener("popstate", e => show((e.state && e.state.s) || "s1"));
 $("back").onclick = () => history.back();
-const mapLink = q => `<a href="https://maps.apple.com/?q=${encodeURIComponent(q)}">Abrir en Mapas</a>`;
+const mapLink = q => `<a href="${esc(/^https:\/\//.test(q) ? q : "https://maps.apple.com/?q=" + encodeURIComponent(q))}" target="_blank" rel="noopener">Abrir en Mapas</a>`;
 
-$("hb").textContent = "Feliz cumpleaños, " + TRIP.her;
+$("hb").textContent = "Feliz cumple, " + TRIP.her;
 $("paper").innerHTML = TRIP.letter.map(p => `<p>${esc(p)}</p>`).join("") + `<p class="sign">${esc(TRIP.sign)}<br>${esc(TRIP.from)}</p>`;
 
 /* 1 candle + confetti */
@@ -190,7 +197,7 @@ function confetti(){
 }
 $("cake").onclick = () => {
   if ($("cake").classList.contains("out")) return;
-  $("cake").classList.add("out"); $("wishline").textContent = "Ojalá se cumpla.";
+  $("cake").classList.add("out"); $("wishline").hidden = false;
   if (navigator.vibrate) { try { navigator.vibrate(40); } catch(e){} }
   confetti(); $("wished").hidden = false;
 };
