@@ -162,6 +162,8 @@ input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2p
 
 <button class="back" id="back" hidden aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
 
+<div class="sparkles" id="sparkles" aria-hidden="true"></div>
+
 <section id="s1">
   <h1 class="hero"><span class="eyebrow">Para vos, hoy</span><span class="name"><span id="herName">Pauli</span><span class="heart" aria-hidden="true">❤️</span></span></h1>
   <p class="wish" id="wishline">Antes de soplar, pedí un deseo.</p>
@@ -195,7 +197,6 @@ input[type=range]:focus-visible{outline:3px solid var(--paper);outline-offset:2p
     <span class="halo"></span><span class="flame"></span>
     <span class="smoke" aria-hidden="true"><i style="--dx:-6px"></i><i style="--dx:8px"></i><i style="--dx:-12px"></i><i style="--dx:5px"></i><i style="--dx:-4px"></i><i style="--dx:12px"></i></span>
   </button>
-  <div class="sparkles" id="sparkles" aria-hidden="true"></div>
   <div id="wished" hidden>
     <button class="btn btn-next" id="to2">Abrí tu cartita<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
   </div>
@@ -324,7 +325,7 @@ $("cake").onclick = () => {
   $("cake").classList.add("out");
   if (navigator.vibrate) { try { navigator.vibrate(40); } catch(e){} }
   const calm = matchMedia("(prefers-reduced-motion:reduce)").matches;
-  setTimeout(() => { $("wishline").textContent = "Yo me encargo de que se cumpla. 🤗"; $("wishline").classList.add("swap"); confetti(); }, calm ? 0 : 450);
+  setTimeout(() => { $("wishline").textContent = "Y yo me encargo de que se cumpla. 🤗"; $("wishline").classList.add("swap"); confetti(); }, calm ? 0 : 450);
   setTimeout(() => { $("wished").hidden = false; }, calm ? 0 : 1500);
 };
 for (let i = 0; i < 16; i++){
